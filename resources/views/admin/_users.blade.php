@@ -4,6 +4,8 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
+            <th scope="col">isAdmin</th>
+
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -13,6 +15,8 @@
                 <td>{{$user->firstName}}</td>
                 <td>{{$user->lastName}}</td>
                 <td>{{$user->email}}</td>
+                <td>{{$user->isAdmin ? "yes" :"no"}}</td>
+
                 <td>
                     <a  class="btn btn-outline-primary edit" data-id="{{$user->id}}">Edit</a> |
                     <a  class="btn btn-danger delete" data-id="{{$user->id}}">Delete</a>

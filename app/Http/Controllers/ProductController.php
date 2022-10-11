@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use PDF;
 class ProductController extends Controller
 {
@@ -12,8 +13,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
+        if (Gate::denies('accessAdmin')) {
+            return redirect('/home');
+        }
         return view('admin.products')->with('products' , Product::get());
     }
 
@@ -35,6 +40,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'=>['required'],
+            'title' => ['required'],
+            'subTitle' => ['required'],
+            'price' => ['required'],
+            'description' => ['nullable'] , 
+            [
+                'required'=>"الحقل مطلوب"
+            ]
+        ]);
+
         $path =   $request->image->store('products');
         $product = new Product();
         $product->name = $request->name;
@@ -80,6 +96,18 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+        $request->validate([
+            'name' => ['required'],
+            'title' => ['required'],
+            'subTitle' => ['required'],
+            'price' => ['required'],
+            'description' => ['nullable'],
+            [
+                'required' => "الحقل مطلوب"
+            ]
+        ]);
+        
+
         $product->name = $request->name;
         $product->title = $request->title;
         $product->subTitle = $request->subTitle;

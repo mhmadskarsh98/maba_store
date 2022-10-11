@@ -58,15 +58,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="time" class="col-4 col-form-label">Phone</label>
+
+                    <div class="form-group row">
+                    <label for="email" class="col-4 col-form-label">Email</label>
                     <div class="col-8">
-                        <input id="phone"
-                               name="phone"
-                               placeholder="phone"
+                        <input id="email"
+                               name="email"
+                               placeholder="email"
                                class="form-control here"
-                               type="string"
-                               value="{{$user->phone}}" />
+                               type="text"
+                               value="{{$user->email}}"/>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">
+                            Please SubTitle is required.
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="isAdmin" class="col-4 col-form-label">isAdmin</label>
+                    <div class="col-8">
+                    <input type = "checkbox" name ="isAdmin" value="1" @if($user->id && $user->isAdmin) checked @endif/>
+                        
                         <div class="valid-feedback">Looks good!</div>
                         <div class="invalid-feedback">
                             Please Price is required.

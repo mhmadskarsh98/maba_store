@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Gate;
 use Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('accessAdmin')) {
+            return redirect('/home');
+        }
         return view('admin.users')->with('users' , User::get());
     }
 
@@ -42,6 +46,11 @@ class UserController extends Controller
         $user->lastName = $request->lastName;
         $user->phone = $request->phone;
         $user->email = $request->email;
+        if($request->input('isAdmin')== null){
+            $user->isAdmin = 0;
+        }else{
+             $user->isAdmin = 1;
+        }
         $user->location = $request->location;
         $user->password = Hash::make($request->password);
         $user->save();
@@ -84,6 +93,11 @@ class UserController extends Controller
         $user->lastName = $request->lastName;
         $user->phone = $request->phone;
         $user->email = $request->email;
+        if ($request->input('isAdmin') == null) {
+            $user->isAdmin = 0;
+        } else {
+            $user->isAdmin = 1;
+        }
         $user->location = $request->location;
         $user->password = Hash::make($request->password);
         $user->save();
